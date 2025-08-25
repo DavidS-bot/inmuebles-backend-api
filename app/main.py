@@ -44,14 +44,15 @@ app.include_router(integrations.router)
 @app.on_event("startup")
 def on_startup():
     init_db()
-    # Crear directorio de uploads si no existe
-    os.makedirs("uploads", exist_ok=True)
-    os.makedirs("uploads/photo", exist_ok=True)
-    os.makedirs("uploads/document", exist_ok=True)
-    os.makedirs("uploads/tenant-document", exist_ok=True)
+    # Usar /uploads si existe (Render), sino usar local
+    upload_dir = "/uploads" if os.path.exists("/uploads") else "uploads"
+    os.makedirs(f"{upload_dir}/photo", exist_ok=True)
+    os.makedirs(f"{upload_dir}/document", exist_ok=True)
+    os.makedirs(f"{upload_dir}/tenant-document", exist_ok=True)
 
-# Montar archivos estáticos
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+# Montar archivos estáticos desde la ruta correcta
+upload_path = "/uploads" if os.path.exists("/uploads") else "uploads"
+app.mount("/uploads", StaticFiles(directory=upload_path), name="uploads")
 
 @app.get("/health")
 def health():

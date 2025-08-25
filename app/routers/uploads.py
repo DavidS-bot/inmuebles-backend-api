@@ -11,7 +11,8 @@ from ..deps import get_current_user
 router = APIRouter(prefix="/uploads", tags=["uploads"])
 
 # Create uploads directory if it doesn't exist
-UPLOAD_DIR = Path("uploads")
+# Use /uploads for Render persistent disk, otherwise local uploads
+UPLOAD_DIR = Path("/uploads") if os.path.exists("/uploads") else Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
 # Allowed file extensions
