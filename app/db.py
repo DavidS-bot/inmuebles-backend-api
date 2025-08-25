@@ -10,6 +10,7 @@ from .models import (
     MortgageDetails, MortgageRevision, MortgagePrepayment,
     ClassificationRule
 )
+from .models_files import FileStorage, PropertyPhoto
 
 os.makedirs(settings.app_data_dir, exist_ok=True)
 

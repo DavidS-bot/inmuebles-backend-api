@@ -7,7 +7,7 @@ import os
 from .db import init_db
 from .routers import (
     properties, rules, movements, cashflow, auth,
-    financial_movements, rental_contracts, mortgage_details, classification_rules, uploads, euribor_rates, analytics, mortgage_calculator, document_manager, notifications, tax_assistant, integrations
+    financial_movements, rental_contracts, mortgage_details, classification_rules, uploads, euribor_rates, analytics, mortgage_calculator, document_manager, notifications, tax_assistant, integrations, file_storage
 )
 
 app = FastAPI(title="Inmuebles API", version="0.1.0")
@@ -40,6 +40,7 @@ app.include_router(document_manager.router)
 app.include_router(notifications.router)
 app.include_router(tax_assistant.router)
 app.include_router(integrations.router)
+app.include_router(file_storage.router)
 
 @app.on_event("startup")
 def on_startup():
