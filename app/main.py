@@ -1,6 +1,8 @@
 # app/main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+import os
 
 from .db import init_db
 from .routers import (
@@ -42,6 +44,14 @@ app.include_router(integrations.router)
 @app.on_event("startup")
 def on_startup():
     init_db()
+    # Crear directorio de uploads si no existe
+    os.makedirs("uploads", exist_ok=True)
+    os.makedirs("uploads/photo", exist_ok=True)
+    os.makedirs("uploads/document", exist_ok=True)
+    os.makedirs("uploads/tenant-document", exist_ok=True)
+
+# Montar archivos estáticos
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 @app.get("/health")
 def health():
