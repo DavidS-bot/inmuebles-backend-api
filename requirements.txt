@@ -2,6 +2,7 @@ fastapi
 uvicorn[standard]
 sqlmodel
 psycopg2-binary
+alembic
 python-jose[cryptography]
 python-multipart
 pydantic-settings
@@ -10,10 +11,11 @@ numpy
 xlrd==2.0.1
 openpyxl
 python-dateutil
-pydantic
+pydantic[email]
 passlib[bcrypt]==1.7.4
 bcrypt==4.0.1
 claude
 selenium
 webdriver-manager
 httpx
+email-validator
