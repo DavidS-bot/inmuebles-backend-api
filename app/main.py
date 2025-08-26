@@ -73,7 +73,7 @@ app.mount("/uploads", StaticFiles(directory=upload_path), name="uploads")
 def health():
     return {"status": "ok"}
 
-# Updated with classification_rules and rental_contracts endpoints - Aug 26
+# Force deploy 20250826_170951 - classification_rules and rental_contracts ready
 
 
 
