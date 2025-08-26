@@ -73,7 +73,7 @@ app.mount("/uploads", StaticFiles(directory=upload_path), name="uploads")
 def health():
     return {"status": "ok"}
 
-# Endpoint temporal removido para evitar errores
+# Updated with classification_rules and rental_contracts endpoints - Aug 26
 
 
 
