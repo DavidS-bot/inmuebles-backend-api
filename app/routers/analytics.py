@@ -236,9 +236,27 @@ def get_portfolio_summary(
         select(Property).where(Property.owner_id == current_user.id)
     ).all()
     
+    # Get mortgage debt total
+    from ..models import MortgageDetails
+    mortgages = session.exec(
+        select(MortgageDetails).join(Property).where(Property.owner_id == current_user.id)
+    ).all()
+    total_debt = sum(m.outstanding_balance for m in mortgages)
+    
+    # Calculate total property value
+    total_property_value = 0
+    for prop in properties:
+        appraisal = prop.appraisal_value or 0
+        purchase = prop.purchase_price or 0
+        # Use appraisal if available, otherwise purchase price
+        total_property_value += appraisal if appraisal > 0 else purchase
+    
     portfolio_metrics = {
         "total_properties": len(properties),
         "total_investment": 0,
+        "total_property_value": total_property_value,
+        "total_debt": total_debt,
+        "net_equity": total_property_value - total_debt,
         "total_income": 0,
         "total_expenses": 0,
         "total_net_income": 0,
